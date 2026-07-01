@@ -2,128 +2,293 @@
 
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { ABOUT_TEXT, EDUCATION_DATA, LANGUAGES_DATA, PERSONAL } from "@/lib/constants";
+import {
+  ABOUT_TEXT,
+  EDUCATION_DATA,
+  LANGUAGES_DATA,
+  PERSONAL,
+} from "@/lib/constants";
 
 const fadeUp = (delay: number = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 } as const,
   viewport: { once: true, margin: "-80px" as const },
-  transition: { duration: 0.6, delay, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
+  transition: {
+    duration: 0.7,
+    delay,
+    ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+  },
 });
 
 export default function About() {
   return (
-    <section id="about" className="relative py-28 md:py-36">
+    <section id="about" className="relative py-32 md:py-40">
       <div className="section-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0 bg-mesh pointer-events-none" />
 
       <div className="relative z-10 container-main">
-        <SectionHeading title="About Me" subtitle="Introduction" />
+        <SectionHeading title="About Me" subtitle="Introduction" gradient />
 
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-14">
-          {/* Left Column — Main Bio */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Bio Card */}
-            <motion.div className="glass-card rounded-2xl p-8 md:p-10" {...fadeUp(0)}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-14">
+          <div className="lg:col-span-3 space-y-8">
+            <motion.div
+              className="glass-card rounded-[24px] p-8 md:p-10"
+              {...fadeUp(0)}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-text-primary">Who I Am</h3>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary">
+                    Who I Am
+                  </h3>
+                  <p className="text-[13px] text-text-muted mt-0.5">
+                    A brief introduction about myself
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {ABOUT_TEXT.map((paragraph, i) => (
-                  <p key={i} className="text-text-secondary text-[15px] leading-relaxed">
+                  <motion.p
+                    key={i}
+                    className="text-text-secondary text-[15px] leading-relaxed"
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.15 * i, duration: 0.5 }}
+                  >
                     {paragraph}
-                  </p>
+                  </motion.p>
                 ))}
               </div>
             </motion.div>
 
-            {/* Quick Info Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
-                { label: "Location", value: "Sri Lanka", icon: "📍" },
-                { label: "Status", value: "Student", icon: "🎓" },
-                { label: "Experience", value: "3+ Years", icon: "💻" },
-                { label: "Focus", value: "Full Stack", icon: "🚀" },
+                {
+                  label: "Location",
+                  value: "Sri Lanka",
+                  icon: (
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Status",
+                  value: "Student",
+                  icon: (
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Experience",
+                  value: "3+ Years",
+                  icon: (
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Focus",
+                  value: "Full Stack",
+                  icon: (
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+                      />
+                    </svg>
+                  ),
+                },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
-                  className="glass-card rounded-xl p-4 text-center cursor-default"
-                  {...fadeUp(0.1 + i * 0.08)}
+                  className="glass-card rounded-[20px] p-5 text-center cursor-default group"
+                  {...fadeUp(0.1 + i * 0.06)}
                 >
-                  <div className="text-xl mb-2">{item.icon}</div>
-                  <div className="text-sm font-medium text-text-primary">{item.value}</div>
-                  <div className="text-[11px] text-text-muted mt-0.5 uppercase tracking-wider">{item.label}</div>
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 text-primary group-hover:scale-110 transition-transform duration-500">
+                    {item.icon}
+                  </div>
+                  <div className="text-sm font-semibold text-text-primary">
+                    {item.value}
+                  </div>
+                  <div className="text-[10px] text-text-muted mt-1 uppercase tracking-[0.2em]">
+                    {item.label}
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Right Column — Education & Languages */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Education */}
-            <motion.div className="glass-card rounded-2xl p-8" {...fadeUp(0.15)}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
+          <div className="lg:col-span-2 space-y-8">
+            <motion.div
+              className="glass-card rounded-[24px] p-8"
+              {...fadeUp(0.15)}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-secondary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-text-primary">Education</h3>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary">
+                    Education
+                  </h3>
+                  <p className="text-[13px] text-text-muted mt-0.5">
+                    Academic background
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {EDUCATION_DATA.map((edu, i) => (
-                  <div
+                  <motion.div
                     key={i}
-                    className="flex items-start gap-3 group"
+                    className="flex items-start gap-4 p-4 rounded-2xl hover:bg-surface-hover transition-all duration-300 group cursor-default"
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * i, duration: 0.5 }}
                   >
-                    <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:scale-150 transition-all duration-300 shrink-0" />
-                    <div>
-                      <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors duration-300">
+                    <div className="mt-1.5 w-2.5 h-2.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all duration-300 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors duration-300 block">
                         {edu.school}
                       </span>
                       {edu.isCurrent && (
-                        <span className="ml-2 text-[10px] font-medium text-secondary px-2 py-0.5 rounded-full bg-secondary/10 uppercase tracking-wider">
+                        <span className="inline-block mt-1.5 text-[10px] font-medium text-secondary px-2.5 py-1 rounded-full bg-secondary/10 uppercase tracking-wider">
                           Current
                         </span>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Languages */}
-            <motion.div className="glass-card rounded-2xl p-8" {...fadeUp(0.25)}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
+            <motion.div
+              className="glass-card rounded-[24px] p-8"
+              {...fadeUp(0.25)}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-accent"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-text-primary">Languages</h3>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary">
+                    Languages
+                  </h3>
+                  <p className="text-[13px] text-text-muted mt-0.5">
+                    Communication skills
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {LANGUAGES_DATA.map((lang) => (
                   <div key={lang.name}>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-text-primary font-medium">{lang.name}</span>
-                      <span className="text-[11px] text-text-muted">{lang.level}</span>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-medium text-text-primary">
+                        {lang.name}
+                      </span>
+                      <span className="text-[11px] text-text-muted">
+                        {lang.level}
+                      </span>
                     </div>
-                    <div className="skill-track">
+                    <div className="h-2 rounded-full bg-surface overflow-hidden">
                       <motion.div
-                        className="skill-fill"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: lang.percent / 100 }}
+                        className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${lang.percent}%` }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1.5, delay: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
+                        transition={{
+                          duration: 1.5,
+                          delay: 0.3,
+                          ease: [0.23, 1, 0.32, 1],
+                        }}
                       />
                     </div>
                   </div>
@@ -131,25 +296,45 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* Connect Card */}
             <motion.a
               href={PERSONAL.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="block glass-card rounded-2xl p-6 group"
+              className="block glass-card rounded-[24px] p-6 group"
               {...fadeUp(0.35)}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <svg className="w-5 h-5 text-text-secondary group-hover:text-text-primary transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                  <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
-                    github.com/yukiboy121
-                  </span>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center group-hover:bg-primary/10 transition-all duration-300">
+                    <svg
+                      className="w-5 h-5 text-text-secondary group-hover:text-primary transition-colors"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                      github.com/yukiboy121
+                    </span>
+                    <p className="text-[11px] text-text-muted mt-0.5">
+                      View my repositories
+                    </p>
+                  </div>
                 </div>
-                <svg className="w-4 h-4 text-text-muted group-hover:text-text-secondary group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                <svg
+                  className="w-4 h-4 text-text-muted group-hover:text-text-secondary group-hover:translate-x-1 transition-all"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                  />
                 </svg>
               </div>
             </motion.a>

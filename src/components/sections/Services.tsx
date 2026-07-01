@@ -38,12 +38,12 @@ const serviceIcons: Record<string, React.ReactNode> = {
 };
 
 const gradientAccents = [
-  "from-primary/20 to-primary/5",
-  "from-secondary/20 to-secondary/5",
-  "from-accent/20 to-accent/5",
-  "from-primary/20 to-primary/5",
-  "from-secondary/20 to-secondary/5",
-  "from-accent/20 to-accent/5",
+  "from-primary/20 via-primary/5 to-transparent",
+  "from-secondary/20 via-secondary/5 to-transparent",
+  "from-accent/20 via-accent/5 to-transparent",
+  "from-primary/20 via-primary/5 to-transparent",
+  "from-secondary/20 via-secondary/5 to-transparent",
+  "from-accent/20 via-accent/5 to-transparent",
 ];
 
 const iconColors = [
@@ -55,42 +55,53 @@ const iconColors = [
   "text-accent",
 ];
 
+const iconBgs = [
+  "bg-primary/10",
+  "bg-secondary/10",
+  "bg-accent/10",
+  "bg-primary/10",
+  "bg-secondary/10",
+  "bg-accent/10",
+];
+
 export default function Services() {
   return (
-    <section id="services" className="relative py-28 md:py-36">
+    <section id="services" className="relative py-32 md:py-40">
       <div className="section-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0 bg-mesh pointer-events-none" />
 
       <div className="relative z-10 container-main">
         <SectionHeading title="Services" subtitle="What I Offer" />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {SERVICES_DATA.map((service, i) => (
             <motion.div
               key={service.title}
-              className="glass-card rounded-2xl p-8 group cursor-default relative overflow-hidden"
+              className="glass-card rounded-[24px] p-8 group cursor-default relative overflow-hidden"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{
                 delay: i * 0.08,
                 duration: 0.6,
-                ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+                ease: [0.23, 1, 0.32, 1],
               }}
+              whileHover={{ y: -4 }}
             >
-              {/* Gradient Background on Hover */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${gradientAccents[i]} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
               />
 
               <div className="relative z-10">
-                <div className={`${iconColors[i]} mb-5 group-hover:scale-110 transition-transform duration-500 inline-block`}>
+                <div
+                  className={`w-14 h-14 rounded-2xl ${iconBgs[i]} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ${iconColors[i]}`}
+                >
                   {serviceIcons[service.icon]}
                 </div>
-                <h3 className="text-base font-semibold text-text-primary mb-2 group-hover:text-gradient-primary transition-all duration-300">
+                <h3 className="text-lg font-semibold text-text-primary mb-3 group-hover:text-gradient-primary transition-all duration-500">
                   {service.title}
                 </h3>
-                <p className="text-text-secondary text-[13px] leading-relaxed">
+                <p className="text-text-secondary text-[14px] leading-relaxed">
                   {service.description}
                 </p>
               </div>

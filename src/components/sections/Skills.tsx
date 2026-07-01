@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { SKILLS_DATA } from "@/lib/constants";
 
@@ -33,50 +32,57 @@ const iconMap: Record<string, React.ReactNode> = {
   ),
 };
 
-const accentColors = ["text-primary", "text-secondary", "text-accent", "text-primary", "text-secondary"];
-const bgColors = ["bg-primary/10", "bg-secondary/10", "bg-accent/10", "bg-primary/10", "bg-secondary/10"];
+const chipGradients = [
+  "from-primary/20 to-primary/5 border-primary/20",
+  "from-secondary/20 to-secondary/5 border-secondary/20",
+  "from-accent/20 to-accent/5 border-accent/20",
+  "from-primary/15 to-primary/5 border-primary/15",
+  "from-secondary/15 to-secondary/5 border-secondary/15",
+];
 
-function SkillBar({
+const chipTextColors = [
+  "text-primary",
+  "text-secondary",
+  "text-accent",
+  "text-primary",
+  "text-secondary",
+];
+
+const iconBgColors = [
+  "bg-primary/10 text-primary",
+  "bg-secondary/10 text-secondary",
+  "bg-accent/10 text-accent",
+  "bg-primary/10 text-primary",
+  "bg-secondary/10 text-secondary",
+];
+
+function SkillChip({
   name,
   level,
-  delay,
+  index,
+  catIdx,
 }: {
   name: string;
   level: number;
-  delay: number;
+  index: number;
+  catIdx: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-
   return (
-    <div ref={ref} className="group">
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-[13px] text-text-secondary group-hover:text-text-primary transition-colors duration-300">
-          {name}
-        </span>
-        <motion.span
-          className="text-[11px] text-text-muted tabular-nums"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: delay + 0.5 }}
-        >
-          {level}%
-        </motion.span>
-      </div>
-      <div className="skill-track">
-        <motion.div
-          className="skill-fill"
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: level / 100 } : { scaleX: 0 }}
-          transition={{
-            duration: 1.5,
-            delay,
-            ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-          }}
-          style={{ transformOrigin: "left" }}
-        />
-      </div>
-    </div>
+    <motion.span
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-medium border bg-gradient-to-br ${chipGradients[catIdx % chipGradients.length]} ${chipTextColors[catIdx % chipTextColors.length]} hover:scale-105 transition-all duration-300 cursor-default`}
+      initial={{ opacity: 0, scale: 0.8, y: 10 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{
+        delay: catIdx * 0.08 + index * 0.04,
+        duration: 0.4,
+        ease: [0.23, 1, 0.32, 1],
+      }}
+      whileHover={{ y: -3, scale: 1.05 }}
+    >
+      <span className="text-[10px] font-mono opacity-60">{level}%</span>
+      {name}
+    </motion.span>
   );
 }
 
@@ -84,45 +90,46 @@ export default function Skills() {
   const categories = Object.values(SKILLS_DATA);
 
   return (
-    <section id="skills" className="relative py-28 md:py-36">
+    <section id="skills" className="relative py-32 md:py-40">
       <div className="section-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0 bg-mesh pointer-events-none" />
 
       <div className="relative z-10 container-main">
-        <SectionHeading title="Skills & Expertise" subtitle="Technologies" />
+        <SectionHeading title="Skills & Expertise" subtitle="Technologies" gradient />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {categories.map((category, catIdx) => (
             <motion.div
               key={category.title}
-              className="glass-card rounded-2xl p-7 group"
+              className="glass-card rounded-[24px] p-8 group"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{
                 delay: catIdx * 0.08,
                 duration: 0.6,
-                ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+                ease: [0.23, 1, 0.32, 1],
               }}
             >
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-10 h-10 rounded-xl ${bgColors[catIdx]} flex items-center justify-center ${accentColors[catIdx]} transition-all duration-300`}>
+              <div className="flex items-center gap-4 mb-6">
+                <div
+                  className={`w-12 h-12 rounded-2xl ${iconBgColors[catIdx]} flex items-center justify-center transition-all duration-300`}
+                >
                   {iconMap[category.icon]}
                 </div>
-                <h3 className="text-[15px] font-semibold text-text-primary">
+                <h3 className="text-base font-semibold text-text-primary">
                   {category.title}
                 </h3>
               </div>
 
-              {/* Skills */}
-              <div className="space-y-4">
+              <div className="flex flex-wrap gap-2">
                 {category.items.map((skill, skillIdx) => (
-                  <SkillBar
+                  <SkillChip
                     key={skill.name}
                     name={skill.name}
                     level={skill.level}
-                    delay={catIdx * 0.1 + skillIdx * 0.08}
+                    index={skillIdx}
+                    catIdx={catIdx}
                   />
                 ))}
               </div>

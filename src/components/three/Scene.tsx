@@ -8,22 +8,19 @@ import { Suspense } from "react";
 
 function ParticleField() {
   const ref = useRef<THREE.Points>(null);
-  const count = 300;
-
+  const count = 200;
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
     const palette = [
-      new THREE.Color("#6C63FF"),
-      new THREE.Color("#00E5FF"),
-      new THREE.Color("#A855F7"),
-      new THREE.Color("#1e1b4b"),
+      new THREE.Color("#7c6dff"),
+      new THREE.Color("#00d4ff"),
+      new THREE.Color("#b44aff"),
     ];
-
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 40;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 40;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 25;
+      pos[i * 3] = (Math.random() - 0.5) * 50;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
       const c = palette[Math.floor(Math.random() * palette.length)];
       col[i * 3] = c.r;
       col[i * 3 + 1] = c.g;
@@ -34,8 +31,8 @@ function ParticleField() {
 
   useFrame((state) => {
     if (!ref.current) return;
-    ref.current.rotation.y = state.clock.elapsedTime * 0.015;
-    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.01) * 0.05;
+    ref.current.rotation.y = state.clock.elapsedTime * 0.008;
+    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.005) * 0.03;
   });
 
   return (
@@ -45,10 +42,10 @@ function ParticleField() {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
+        size={0.04}
         vertexColors
         transparent
-        opacity={0.6}
+        opacity={0.4}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -57,7 +54,7 @@ function ParticleField() {
   );
 }
 
-function GlowingSphere({
+function GlowingIcosahedron({
   position,
   color,
   size,
@@ -72,28 +69,30 @@ function GlowingSphere({
 
   useFrame((state) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.x = state.clock.elapsedTime * speed * 0.2;
-    meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.15;
+    meshRef.current.rotation.x =
+      state.clock.elapsedTime * speed * 0.15;
+    meshRef.current.rotation.y =
+      state.clock.elapsedTime * speed * 0.2;
   });
 
   return (
-    <Float speed={speed} rotationIntensity={0.4} floatIntensity={1.2}>
+    <Float speed={speed * 0.6} rotationIntensity={0.3} floatIntensity={0.8}>
       <mesh ref={meshRef} position={position}>
         <icosahedronGeometry args={[size, 1]} />
         <meshStandardMaterial
           color={color}
           transparent
-          opacity={0.15}
+          opacity={0.12}
           wireframe
           emissive={color}
-          emissiveIntensity={0.1}
+          emissiveIntensity={0.15}
         />
       </mesh>
     </Float>
   );
 }
 
-function TorusShape({
+function GlowingTorus({
   position,
   color,
   size,
@@ -108,21 +107,23 @@ function TorusShape({
 
   useFrame((state) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.x = state.clock.elapsedTime * speed * 0.3;
-    meshRef.current.rotation.z = state.clock.elapsedTime * speed * 0.2;
+    meshRef.current.rotation.x =
+      state.clock.elapsedTime * speed * 0.2;
+    meshRef.current.rotation.z =
+      state.clock.elapsedTime * speed * 0.15;
   });
 
   return (
-    <Float speed={speed * 0.8} rotationIntensity={0.3} floatIntensity={0.8}>
+    <Float speed={speed * 0.5} rotationIntensity={0.2} floatIntensity={0.6}>
       <mesh ref={meshRef} position={position}>
-        <torusGeometry args={[size, size * 0.25, 16, 32]} />
+        <torusGeometry args={[size, size * 0.3, 16, 32]} />
         <meshStandardMaterial
           color={color}
           transparent
-          opacity={0.1}
+          opacity={0.08}
           wireframe
           emissive={color}
-          emissiveIntensity={0.08}
+          emissiveIntensity={0.1}
         />
       </mesh>
     </Float>
@@ -133,27 +134,75 @@ export default function Scene3D() {
   return (
     <div className="fixed inset-0 z-0" style={{ pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 0, 15], fov: 55 }}
+        camera={{ position: [0, 0, 18], fov: 50 }}
         dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
         style={{ background: "transparent" }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.15} />
-          <pointLight position={[15, 15, 15]} intensity={0.3} color="#6C63FF" />
-          <pointLight position={[-15, -10, 5]} intensity={0.2} color="#00E5FF" />
-          <pointLight position={[0, 15, -15]} intensity={0.15} color="#A855F7" />
+          <ambientLight intensity={0.2} />
+          <pointLight
+            position={[15, 15, 15]}
+            intensity={0.4}
+            color="#7c6dff"
+          />
+          <pointLight
+            position={[-15, -10, 5]}
+            intensity={0.3}
+            color="#00d4ff"
+          />
+          <pointLight
+            position={[0, 15, -15]}
+            intensity={0.2}
+            color="#b44aff"
+          />
 
-          <GlowingSphere position={[-6, 4, -5]} color="#6C63FF" size={1.2} speed={1.2} />
-          <GlowingSphere position={[7, -3, -8]} color="#00E5FF" size={0.8} speed={1.5} />
-          <GlowingSphere position={[5, 5, -6]} color="#A855F7" size={0.6} speed={1.8} />
-          
-          <TorusShape position={[-5, -4, -7]} color="#6C63FF" size={1.0} speed={1.0} />
-          <TorusShape position={[6, 2, -10]} color="#00E5FF" size={0.7} speed={1.3} />
-
-          <GlowingSphere position={[-8, 0, -10]} color="#A855F7" size={0.5} speed={2.0} />
-          <GlowingSphere position={[0, 7, -12]} color="#6C63FF" size={0.4} speed={1.6} />
-
+          <GlowingIcosahedron
+            position={[-7, 5, -6]}
+            color="#7c6dff"
+            size={1.0}
+            speed={1.0}
+          />
+          <GlowingIcosahedron
+            position={[8, -4, -9]}
+            color="#00d4ff"
+            size={0.7}
+            speed={1.3}
+          />
+          <GlowingIcosahedron
+            position={[6, 6, -7]}
+            color="#b44aff"
+            size={0.5}
+            speed={1.6}
+          />
+          <GlowingTorus
+            position={[-6, -5, -8]}
+            color="#7c6dff"
+            size={0.9}
+            speed={0.8}
+          />
+          <GlowingTorus
+            position={[7, 3, -11]}
+            color="#00d4ff"
+            size={0.6}
+            speed={1.1}
+          />
+          <GlowingIcosahedron
+            position={[-9, 0, -11]}
+            color="#b44aff"
+            size={0.4}
+            speed={1.8}
+          />
+          <GlowingIcosahedron
+            position={[0, 8, -13]}
+            color="#7c6dff"
+            size={0.35}
+            speed={1.4}
+          />
           <ParticleField />
         </Suspense>
       </Canvas>

@@ -23,7 +23,6 @@ export default function PortfolioClient() {
       <SmoothScroll />
       <MouseFollower />
       <Scene3D />
-
       <div className="relative z-10 noise">
         <Navbar />
         <main>

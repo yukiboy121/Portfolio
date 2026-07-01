@@ -1,66 +1,79 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function MouseFollower() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [hovering, setHovering] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const ringX = useSpring(cursorX, { stiffness: 200, damping: 30, mass: 0.5 });
+  const ringY = useSpring(cursorY, { stiffness: 200, damping: 30, mass: 0.5 });
+  const dotX = useSpring(cursorX, { stiffness: 400, damping: 25, mass: 0.2 });
+  const dotY = useSpring(cursorY, { stiffness: 400, damping: 25, mass: 0.2 });
+  const hovering = useRef(false);
+  const visible = useRef(false);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
-      if (!visible) setVisible(true);
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      if (!visible.current) visible.current = true;
     };
-
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      setHovering(
+      hovering.current =
         t.tagName === "A" ||
         t.tagName === "BUTTON" ||
         !!t.closest("a") ||
-        !!t.closest("button"),
-      );
+        !!t.closest("button") ||
+        !!t.closest('[role="button"]');
     };
-
-    const leave = () => {
-      setVisible(false);
-    };
-
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", over);
-    document.addEventListener("mouseleave", leave);
-
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
-      document.removeEventListener("mouseleave", leave);
     };
-  }, [visible]);
+  }, [cursorX, cursorY]);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
-      animate={{
-        x: pos.x - (hovering ? 20 : 5),
-        y: pos.y - (hovering ? 20 : 5),
-        width: hovering ? 40 : 10,
-        height: hovering ? 40 : 10,
-        opacity: visible ? 1 : 0,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 500,
-        damping: 28,
-        mass: 0.3,
-      }}
-      style={{
-        borderRadius: "50%",
-        background: hovering ? "transparent" : "rgba(108, 99, 255, 0.5)",
-        border: hovering ? "1px solid rgba(108, 99, 255, 0.4)" : "none",
-        mixBlendMode: hovering ? "normal" : "normal",
-      }}
-    />
+    <>
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block rounded-full"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        animate={{
+          width: hovering.current ? 48 : 28,
+          height: hovering.current ? 48 : 28,
+          border: "1px solid rgba(124, 109, 255, 0.3)",
+          backgroundColor: hovering.current
+            ? "rgba(124, 109, 255, 0.06)"
+            : "transparent",
+        }}
+        transition={{
+          width: { type: "spring", stiffness: 300, damping: 25 },
+          height: { type: "spring", stiffness: 300, damping: 25 },
+        }}
+      />
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block rounded-full bg-primary"
+        style={{
+          x: dotX,
+          y: dotY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: 4,
+          height: 4,
+        }}
+        animate={{
+          scale: hovering.current ? 1.6 : 1,
+          opacity: visible.current ? 1 : 0,
+        }}
+      />
+    </>
   );
 }

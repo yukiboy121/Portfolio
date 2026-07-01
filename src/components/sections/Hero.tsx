@@ -4,7 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { PERSONAL } from "@/lib/constants";
 
-function useTypewriter(texts: string[], typingSpeed = 60, deletingSpeed = 30, pauseMs = 2500) {
+function useTypewriter(
+  texts: string[],
+  typingSpeed = 50,
+  deletingSpeed = 25,
+  pauseMs = 2500
+) {
   const [display, setDisplay] = useState("");
   const [idx, setIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -28,27 +33,13 @@ function useTypewriter(texts: string[], typingSpeed = 60, deletingSpeed = 30, pa
           }
         }
       },
-      deleting ? deletingSpeed : typingSpeed,
+      deleting ? deletingSpeed : typingSpeed
     );
     return () => clearTimeout(timeout);
   }, [display, deleting, idx, texts, typingSpeed, deletingSpeed, pauseMs]);
 
   return display;
 }
-
-const letterVariants = {
-  hidden: { opacity: 0, y: 50, rotateX: -60 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: {
-      delay: 0.6 + i * 0.035,
-      duration: 0.8,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  }),
-};
 
 export default function Hero() {
   const typed = useTypewriter(PERSONAL.role);
@@ -66,65 +57,65 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouse);
   }, [handleMouse]);
 
-  const headingText = `Hi, I'm ${PERSONAL.name}`;
-  const letters = headingText.split("");
+  const nameText = PERSONAL.name;
+  const nameLetters = nameText.split("");
 
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Ambient Glow Orbs */}
       <div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-100 blur-[160px] pointer-events-none"
+        className="absolute w-[700px] h-[700px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(108,99,255,0.08), transparent 70%)",
-          top: "20%",
-          left: "15%",
-          transform: `translate(${mousePos.x * 15}px, ${mousePos.y * 15}px)`,
-          transition: "transform 0.8s cubic-bezier(0.23, 1, 0.32, 1)",
-        }}
-      />
-      <div
-        className="absolute w-[500px] h-[500px] rounded-full opacity-100 blur-[140px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(0,229,255,0.06), transparent 70%)",
-          bottom: "20%",
-          right: "15%",
-          transform: `translate(${mousePos.x * -10}px, ${mousePos.y * -10}px)`,
+          background:
+            "radial-gradient(circle, rgba(124,109,255,0.08), transparent 70%)",
+          top: "15%",
+          left: "10%",
+          transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)`,
           transition: "transform 1s cubic-bezier(0.23, 1, 0.32, 1)",
         }}
       />
       <div
-        className="absolute w-[400px] h-[400px] rounded-full opacity-100 blur-[120px] pointer-events-none"
+        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(168,85,247,0.05), transparent 70%)",
-          top: "50%",
-          left: "50%",
-          transform: `translate(-50%, -50%) translate(${mousePos.x * 8}px, ${mousePos.y * 8}px)`,
+          background:
+            "radial-gradient(circle, rgba(0,212,255,0.06), transparent 70%)",
+          bottom: "15%",
+          right: "10%",
+          transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)`,
           transition: "transform 1.2s cubic-bezier(0.23, 1, 0.32, 1)",
         }}
       />
-
-      {/* Grid Pattern */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute w-[450px] h-[450px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(180,74,255,0.05), transparent 70%)",
+          top: "50%",
+          left: "50%",
+          transform: `translate(-50%, -50%) translate(${mousePos.x * 12}px, ${mousePos.y * 12}px)`,
+          transition: "transform 1.4s cubic-bezier(0.23, 1, 0.32, 1)",
+        }}
+      />
+
+      <div
+        className="absolute inset-0 opacity-[0.015]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+            "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
         }}
       />
 
       <div className="relative z-10 container-main text-center">
-        {/* Status Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          initial={{ opacity: 0, y: 24, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
+          className="mb-10"
         >
-          <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-border text-[12px] text-text-secondary tracking-wide">
+          <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-border bg-surface/30 text-[11px] text-text-secondary tracking-wide">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
@@ -133,96 +124,121 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Main Heading — Letter by Letter */}
-        <h1 className="text-[clamp(2.2rem,6vw,5.5rem)] font-bold leading-[1.05] tracking-tight mb-6">
-          {letters.map((letter, i) => (
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <span className="text-[13px] md:text-sm font-medium text-text-muted uppercase tracking-[0.25em]">
+            Hi, I&apos;m
+          </span>
+        </motion.div>
+
+        <h1 className="text-[clamp(2.8rem,7vw,6rem)] font-bold leading-[1.02] tracking-tight mb-6">
+          {nameLetters.map((letter, i) => (
             <motion.span
               key={i}
               custom={i}
-              variants={letterVariants}
-              initial="hidden"
-              animate="visible"
-              className={
-                i >= "Hi, I'm ".length
-                  ? "text-gradient-primary"
-                  : "text-text-primary"
-              }
-              style={{ display: "inline-block", whiteSpace: letter === " " ? "pre" : undefined }}
+              initial={{ opacity: 0, y: 60, rotateX: -70 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{
+                delay: 0.6 + i * 0.04,
+                duration: 0.9,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="text-gradient-primary inline-block"
+              style={{
+                whiteSpace: letter === " " ? "pre" : undefined,
+              }}
             >
               {letter === " " ? "\u00A0" : letter}
             </motion.span>
           ))}
         </h1>
 
-        {/* Typewriter Role */}
         <motion.div
-          className="h-10 sm:h-12 flex items-center justify-center mb-6"
+          className="h-12 sm:h-14 flex items-center justify-center mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8 }}
         >
-          <span className="text-lg sm:text-xl md:text-2xl font-light text-secondary tracking-wide">
+          <span className="text-xl sm:text-2xl md:text-3xl font-light text-text-secondary tracking-wide">
             {typed}
           </span>
           <motion.span
-            className="inline-block w-[2px] h-6 sm:h-7 bg-primary ml-1"
+            className="inline-block w-[2px] h-7 sm:h-8 bg-primary ml-1.5 rounded-full"
             animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+            transition={{
+              duration: 0.6,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
           />
         </motion.div>
 
-        {/* Subtitle */}
         <motion.p
-          className="max-w-xl mx-auto text-text-secondary text-[15px] sm:text-base leading-relaxed mb-12"
-          initial={{ opacity: 0, y: 16 }}
+          className="max-w-2xl mx-auto text-text-secondary text-[15px] sm:text-base md:text-lg leading-relaxed mb-14 font-light"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.0, duration: 0.7 }}
+          transition={{ delay: 2.1, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
         >
           {PERSONAL.tagline}
         </motion.p>
 
-        {/* CTA Buttons */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-20"
-          initial={{ opacity: 0, y: 20 }}
+          className="flex flex-wrap items-center justify-center gap-4 mb-24"
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.3, duration: 0.7 }}
+          transition={{ delay: 2.4, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
         >
           <motion.a
             href="#projects"
-            className="group relative px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-sm font-medium text-white overflow-hidden"
+            className="group relative px-8 py-3.5 sm:px-10 sm:py-4 rounded-full text-sm font-medium text-white overflow-hidden"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-secondary rounded-full animate-gradient" style={{ backgroundSize: "200% 200%" }} />
-            <span className="relative z-10">View Projects</span>
+            <div
+              className="absolute inset-0 rounded-full animate-gradient"
+              style={{
+                background:
+                  "linear-gradient(135deg, #7c6dff, #b44aff, #00d4ff, #7c6dff)",
+                backgroundSize: "300% 300%",
+              }}
+            />
+            <span className="relative z-10 flex items-center gap-2">
+              View Projects
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </span>
           </motion.a>
 
           <motion.a
             href="#contact"
-            className="px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-sm font-medium text-text-primary border border-border hover:border-border-hover hover:bg-surface-hover transition-all duration-300"
+            className="px-8 py-3.5 sm:px-10 sm:py-4 rounded-full text-sm font-medium text-text-primary border border-border hover:border-border-hover hover:bg-surface-hover transition-all duration-300"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
             Contact Me
           </motion.a>
-
-          <motion.a
-            href="#contact"
-            className="px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-300"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Download CV ↓
-          </motion.a>
         </motion.div>
 
-        {/* Stats */}
         <motion.div
-          className="flex items-center justify-center gap-10 sm:gap-16"
+          className="flex items-center justify-center gap-12 sm:gap-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.6, duration: 0.8 }}
+          transition={{ delay: 2.8, duration: 0.8 }}
         >
           {[
             { value: "10+", label: "Projects" },
@@ -231,14 +247,19 @@ export default function Hero() {
           ].map((stat, i) => (
             <div key={stat.label} className="text-center">
               <motion.div
-                className="text-2xl sm:text-3xl font-bold text-text-primary"
-                initial={{ opacity: 0, scale: 0.5 }}
+                className="text-3xl sm:text-4xl font-bold text-gradient-primary"
+                initial={{ opacity: 0, scale: 0.3 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 2.8 + i * 0.15, type: "spring", stiffness: 200 }}
+                transition={{
+                  delay: 3 + i * 0.15,
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 15,
+                }}
               >
                 {stat.value}
               </motion.div>
-              <div className="text-[11px] sm:text-xs text-text-muted mt-1 uppercase tracking-widest">
+              <div className="text-[10px] sm:text-[11px] text-text-muted mt-1.5 uppercase tracking-[0.25em] font-medium">
                 {stat.label}
               </div>
             </div>
@@ -246,22 +267,29 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.2 }}
+        transition={{ delay: 3.5 }}
       >
         <motion.div
-          className="w-5 h-8 rounded-full border border-border flex justify-center pt-1.5"
+          className="w-6 h-10 rounded-full border border-border flex justify-center pt-2"
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
           <motion.div
-            className="w-1 h-1 rounded-full bg-text-muted"
-            animate={{ opacity: [0.4, 1, 0.4], y: [0, 10, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-1 h-1.5 rounded-full bg-text-muted"
+            animate={{ opacity: [0.3, 1, 0.3], y: [0, 12, 0] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
         </motion.div>
       </motion.div>
