@@ -1,111 +1,27 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowDownRight, ArrowUpRight, Menu, MoveRight, Sparkles, X } from 'lucide-react';
 
-// chrome
-import Preloader from './components/Preloader';
-import CustomCursor from './components/CustomCursor';
-import ScrollProgress from './components/ScrollProgress';
-import TopBar from './components/TopBar';
-import StatusBar from './components/StatusBar';
-import CommandPalette from './components/CommandPalette';
-import MarqueeSection from './components/Marquee';
-import Footer from './components/Footer';
-
-// sections
-import Hero from './sections/Hero';
-import About from './sections/About';
-import Skills from './sections/Skills';
-import Projects from './sections/Projects';
-import Experience from './sections/Experience';
-import Services from './sections/Services';
-import Testimonials from './sections/Testimonials';
-import Achievements from './sections/Achievements';
-import Gallery from './sections/Gallery';
-import Contact from './sections/Contact';
+const projects = [
+  { number: '01', type: 'Fintech platform', name: 'Nebula Finance', description: 'A clearer, calmer way to understand the market in motion.', tags: ['Product design', 'React', 'Data viz'], color: 'violet', metric: '+40%', label: 'trading efficiency' },
+  { number: '02', type: 'Digital experience', name: 'Lumière Studio', description: 'A cinematic identity for a creative studio with a big point of view.', tags: ['Creative dev', 'Motion', 'WebGL'], color: 'coral', metric: '3×', label: 'Awwwards SOTD' },
+  { number: '03', type: 'Commerce reimagined', name: 'Meridian', description: 'An effortlessly tactile shopping experience for a modern fashion label.', tags: ['E-commerce', 'Strategy', 'Next.js'], color: 'lime', metric: '+60%', label: 'conversion rate' },
+];
+const skills = ['Product strategy', 'UX / UI design', 'React & Next.js', 'Design systems', 'Creative development', 'Motion & interaction'];
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [cmdOpen, setCmdOpen] = useState(false);
-  const [showTop, setShowTop] = useState(false);
-
-  const onBoot = useCallback(() => setLoading(false), []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setCmdOpen((o) => !o);
-      }
-      if (e.key === 'Escape') setCmdOpen(false);
-    };
-    const onScroll = () => setShowTop(window.scrollY > 600);
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
-
-  return (
-    <div className="relative min-h-screen bg-void text-ink overflow-x-hidden md:[cursor:none]">
-      {/* boot sequence */}
-      <AnimatePresence>{loading && <Preloader onComplete={onBoot} />}</AnimatePresence>
-
-      {/* overlays & chrome */}
-      <CustomCursor />
-      <ScrollProgress />
-      <div className="scanlines" aria-hidden="true" />
-      <div className="crt-vignette" aria-hidden="true" />
-      <div className="scan-bar" aria-hidden="true" />
-
-      <TopBar onCommandPalette={() => setCmdOpen(true)} />
-      <CommandPalette isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
-
-      {/* main */}
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: 0.8, delay: 0.25 }}
-        className="relative z-10"
-      >
-        <Hero />
-        <MarqueeSection />
-        <About />
-        <Skills />
-        <Projects />
-        <MarqueeSection />
-        <Experience />
-        <Services />
-        <Testimonials />
-        <Achievements />
-        <Gallery />
-        <Contact />
-        <Footer />
-      </motion.main>
-
-      {/* fixed bottom chrome */}
-      <StatusBar />
-
-      {/* back to top */}
-      <AnimatePresence>
-        {showTop && (
-          <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-10 right-5 z-[96] flex items-center gap-1.5 px-3 py-2 rounded border border-neon/25 bg-panel/90 backdrop-blur text-neon text-[11px] hover:bg-neon/10 hover:shadow-[0_0_20px_rgba(0,255,65,0.2)] transition-all"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 16 }}
-            whileTap={{ scale: 0.94 }}
-            aria-label="Back to top"
-          >
-            <ArrowUp size={12} /> top
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => { const listen = () => setScrolled(window.scrollY > 24); window.addEventListener('scroll', listen, { passive: true }); return () => window.removeEventListener('scroll', listen); }, []);
+  const go = (id: string) => { setMenuOpen(false); document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' }); };
+  return <main>
+    <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}><a className="brand" href="#top" aria-label="Alex Rivera home"><span>AR</span><i /></a><nav className="desktop-nav"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav><a href="#contact" className="header-cta">Let’s talk <ArrowUpRight size={15} /></a><button className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Menu size={20} /></button></header>
+    <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}><button onClick={() => setMenuOpen(false)} aria-label="Close menu"><X size={26} /></button><a onClick={() => go('#work')} href="#work">Work</a><a onClick={() => go('#about')} href="#about">About</a><a onClick={() => go('#contact')} href="#contact">Contact</a></div>
+    <section className="hero" id="top"><div className="hero-orb orb-one" /><div className="hero-orb orb-two" /><div className="hero-grid" /><div className="eyebrow hero-eyebrow"><span className="live-dot" /> Available for select projects — 2026</div><div className="hero-copy"><p className="intro">Independent designer &amp; developer</p><h1>Digital experiences<br />with <em>feeling.</em></h1><p className="hero-description">I turn ambitious ideas into distinctive digital products that people remember, use, and come back to.</p><div className="hero-actions"><a className="button button-dark" href="#work">Explore selected work <MoveRight size={18} /></a><a className="text-link" href="#about">More about me <ArrowDownRight size={17} /></a></div></div><div className="hero-foot"><span>Scroll to explore</span><div className="scroll-line" /><span>Based in San Francisco<br />Working globally</span></div><div className="hero-monogram">AR</div></section>
+    <section className="statement" id="about"><p className="eyebrow">01 — A little about me</p><div className="statement-layout"><h2>I blend sharp strategy,<br />thoughtful design, and<br /><em>serious craft.</em></h2><div className="statement-side"><p>I’m Alex, a multidisciplinary creative with 5+ years of experience building brands, products, and digital worlds for people who care about the details.</p><a href="#contact" className="circle-link" aria-label="Get in touch"><ArrowUpRight size={25} /></a></div></div><div className="numbers"><div><strong>05<sup>+</sup></strong><span>Years making on the web</span></div><div><strong>50<sup>+</sup></strong><span>Projects brought to life</span></div><div><strong>18</strong><span>Delightful collaborators</span></div></div></section>
+    <section className="work" id="work"><div className="section-top"><div><p className="eyebrow">02 — Selected work</p><h2>Made to move<br />people <em>forward.</em></h2></div><a href="#contact" className="text-link">Have a project in mind? <ArrowUpRight size={17} /></a></div><div className="projects">{projects.map(project => <article className={`project project-${project.color}`} key={project.name}><div className="project-visual"><span className="project-number">{project.number}</span><div className="visual-ui"><div className="ui-top"><i /><i /><i /></div><div className="ui-content"><span /><span /><span /></div><div className="ui-chart"><b /><b /><b /><b /><b /><b /></div></div><div className="visual-shape" /></div><div className="project-info"><div><p>{project.type}</p><h3>{project.name}</h3><p className="project-description">{project.description}</p></div><div className="project-meta"><div className="tags">{project.tags.map(t => <span key={t}>{t}</span>)}</div><div className="result"><strong>{project.metric}</strong><span>{project.label}</span></div></div></div><a className="project-link" href="#contact" aria-label={`View ${project.name}`}><ArrowUpRight size={22} /></a></article>)}</div></section>
+    <section className="capabilities"><div className="capabilities-mark"><Sparkles size={32} /></div><p className="eyebrow">03 — What I bring</p><h2>From first spark<br />to final <em>pixel.</em></h2><div className="skills">{skills.map((skill, index) => <div key={skill}><span>0{index + 1}</span>{skill}<ArrowUpRight size={18} /></div>)}</div></section>
+    <section className="quote"><p>“Alex has that rare ability to make complex things feel perfectly obvious. He was the creative catalyst our product needed.”</p><div><span className="quote-avatar">JM</span><span><strong>Jordan Mitchell</strong><small>Founder, Nebula Finance</small></span></div></section>
+    <section className="contact" id="contact"><div className="contact-shape" /><p className="eyebrow">04 — Let’s make something</p><h2>Have a good<br />idea? <em>Let’s talk.</em></h2><a className="mail-link" href="mailto:hello@alexrivera.dev">hello@alexrivera.dev <ArrowUpRight /></a><div className="contact-footer"><span>© 2026 Alex Rivera</span><span>San Francisco · Worldwide</span><div><a href="#top">Instagram</a><a href="#top">LinkedIn</a><a href="#top">GitHub</a></div></div></section>
+  </main>;
 }
-
 export default App;
