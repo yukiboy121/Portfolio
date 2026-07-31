@@ -1,74 +1,105 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useState, useCallback, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
-const CustomCursor = () => {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const springX = useSpring(x, { stiffness: 500, damping: 40 });
-  const springY = useSpring(y, { stiffness: 500, damping: 40 });
-  const frameX = useSpring(x, { stiffness: 220, damping: 26 });
-  const frameY = useSpring(y, { stiffness: 220, damping: 26 });
-  const [hovering, setHovering] = useState(false);
-  const frameRef = useRef<HTMLDivElement>(null);
+export default function CustomCursor() {
+  const [cursorText, setCursorText] = useState("");
+  const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+  const textRef = useRef(cursorText);
+  textRef.current = cursorText;
+
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 30, stiffness: 400, mass: 0.3 };
+  const x = useSpring(cursorX, springConfig);
+  const y = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || "ontouchstart" in window);
     };
-    const over = (e: MouseEvent) => {
-      const t = e.target as HTMLElement;
-      const interactive = t.closest('a, button, [data-cursor="pointer"], input, textarea, [role="button"]');
-      setHovering(!!interactive);
-      if (frameRef.current) {
-        frameRef.current.style.width = interactive ? '34px' : '20px';
-        frameRef.current.style.height = interactive ? '34px' : '20px';
-        frameRef.current.style.borderColor = interactive ? 'rgba(0,255,65,0.9)' : 'rgba(0,255,65,0.35)';
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      if (!isVisible) setIsVisible(true);
+    },
+    [cursorX, cursorY, isVisible]
+  );
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    const handleEnter = (e: Event) => {
+      const target = e.target as HTMLElement;
+      const cursorAttr = target.closest("[data-cursor]");
+      if (cursorAttr) {
+        const text = (cursorAttr as HTMLElement).dataset.cursor || "";
+        setCursorText(text);
+        setIsHovering(true);
       }
     };
-    window.addEventListener('mousemove', move);
-    document.addEventListener('mouseover', over);
-    return () => {
-      window.removeEventListener('mousemove', move);
-      document.removeEventListener('mouseover', over);
+
+    const handleLeave = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("[data-cursor]")) {
+        setCursorText("");
+        setIsHovering(false);
+      }
     };
-  }, [x, y]);
+
+    document.addEventListener("mouseover", handleEnter);
+    document.addEventListener("mouseout", handleLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseover", handleEnter);
+      document.removeEventListener("mouseout", handleLeave);
+    };
+  }, [isMobile, handleMouseMove]);
+
+  if (isMobile) return null;
+
+  const hasText = cursorText.length > 0;
+  const dotSize = isHovering ? (hasText ? 72 : 32) : 6;
 
   return (
-    <>
-      {/* block cursor dot */}
+    <motion.div
+      className="fixed top-0 left-0 z-[9999] pointer-events-none"
+      style={{ x, y }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+    >
       <motion.div
-        className="cursor-block hidden md:block"
-        style={{ left: springX, top: springY, x: '-50%', y: '-50%' }}
-      >
-        <div
-          className="bg-neon"
-          style={{
-            width: hovering ? 5 : 8,
-            height: hovering ? 5 : 14,
-            boxShadow: '0 0 10px rgba(0,255,65,0.7)',
-            transition: 'width .15s, height .15s',
-          }}
-        />
-      </motion.div>
-
-      {/* outer frame */}
-      <motion.div
-        ref={frameRef}
-        className="cursor-frame hidden md:block rounded-[3px] border"
-        style={{
-          left: frameX,
-          top: frameY,
-          x: '-50%',
-          y: '-50%',
-          width: 20,
-          height: 20,
-          borderColor: 'rgba(0,255,65,0.35)',
-          transition: 'width .25s, height .25s, border-color .25s',
+        className="flex items-center justify-center -translate-x-1/2 -translate-y-1/2 rounded-full"
+        animate={{
+          width: dotSize,
+          height: dotSize,
+          backgroundColor: isHovering ? "rgba(17,17,17,0.9)" : "rgba(17,17,17,1)",
         }}
-      />
-    </>
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {hasText && isHovering && (
+          <motion.span
+            className="text-[9px] font-medium tracking-[0.1em] text-white whitespace-nowrap"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2, delay: 0.05 }}
+          >
+            {cursorText}
+          </motion.span>
+        )}
+      </motion.div>
+    </motion.div>
   );
-};
-
-export default CustomCursor;
+}
