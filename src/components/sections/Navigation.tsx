@@ -33,7 +33,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-[#F7F7F5]/80 backdrop-blur-md border-b border-[#E6E6E3]/50"
+            ? "bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)]/50"
             : "bg-transparent"
         }`}
         initial={{ y: -100 }}
@@ -48,7 +48,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="font-display font-semibold text-sm tracking-wider text-[#111111]"
+            className="font-display font-semibold text-sm tracking-wider text-[var(--color-text)]"
             data-cursor="HOME"
             aria-label="Sneha Nethsara - Home"
           >
@@ -61,7 +61,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
               <button
                 key={item.label}
                 onClick={() => scrollTo(item.href)}
-                className="text-[11px] tracking-[0.15em] text-[#777777] hover:text-[#111111] transition-colors duration-300 font-medium"
+                className="text-[11px] tracking-[0.15em] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 font-medium"
                 data-cursor=""
               >
                 {item.label}
@@ -72,7 +72,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
           {/* CTA */}
           <button
             onClick={onContactClick}
-            className="hidden md:flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[#111111] group"
+            className="hidden md:flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[var(--color-text)] group"
             data-cursor=""
           >
             <span>LET'S TALK</span>
@@ -88,12 +88,12 @@ export default function Navigation({ onContactClick }: NavigationProps) {
             aria-label="Toggle menu"
           >
             <motion.span
-              className="block w-5 h-px bg-[#111111]"
+              className="block w-5 h-px bg-[var(--color-text)]"
               animate={mobileOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.3 }}
             />
             <motion.span
-              className="block w-5 h-px bg-[#111111]"
+              className="block w-5 h-px bg-[var(--color-text)]"
               animate={mobileOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.3 }}
             />
@@ -105,7 +105,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#F7F7F5] flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-40 bg-[var(--color-bg)] flex flex-col items-center justify-center gap-8 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -115,7 +115,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
               <motion.button
                 key={item.label}
                 onClick={() => scrollTo(item.href)}
-                className="text-2xl font-display font-light tracking-wider text-[#111111]"
+                className="text-2xl font-display font-light tracking-wider text-[var(--color-text)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -129,7 +129,7 @@ export default function Navigation({ onContactClick }: NavigationProps) {
                 setMobileOpen(false);
                 onContactClick();
               }}
-              className="text-lg tracking-wider text-[#777777] mt-4"
+              className="text-lg tracking-wider text-[var(--color-muted)] mt-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}

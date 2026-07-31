@@ -84,13 +84,13 @@ export default function CustomCursor() {
         animate={{
           width: dotSize,
           height: dotSize,
-          backgroundColor: isHovering ? "rgba(17,17,17,0.9)" : "rgba(17,17,17,1)",
+          backgroundColor: isHovering ? "rgba(250,250,250,0.9)" : "rgba(250,250,250,1)",
         }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
         {hasText && isHovering && (
           <motion.span
-            className="text-[9px] font-medium tracking-[0.1em] text-white whitespace-nowrap"
+            className="text-[9px] font-medium tracking-[0.1em] text-black whitespace-nowrap"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
