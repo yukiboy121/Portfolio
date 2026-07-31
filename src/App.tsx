@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import CustomCursor from "@/components/CustomCursor";
-import PageLoader from "@/components/PageLoader";
+
 import Navigation from "@/components/sections/Navigation";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -14,14 +13,10 @@ import ProjectCaseStudy from "@/components/sections/ProjectCaseStudy";
 import type { Project } from "@/data/projects";
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [caseStudyOpen, setCaseStudyOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1200);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -41,8 +36,6 @@ export default function App() {
 
   return (
     <div className="bg-transparent min-h-screen text-[var(--color-text)]">
-      <CustomCursor />
-      <PageLoader isLoading={isLoading} />
 
       <Navigation onContactClick={handleContactClick} />
 
