@@ -52,13 +52,13 @@ export default function Services() {
   };
 
   return (
-    <section className="py-32 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto">
-      <LineReveal className="mb-16 md:mb-24" />
+    <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+      <LineReveal className="mb-12 md:mb-16" />
 
-      <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-12 mb-12 md:mb-16">
         <div className="md:col-span-3">
           <Reveal>
-            <p className="text-[11px] tracking-[0.2em] text-[#777777] font-medium">
+            <p className="text-[11px] tracking-[0.2em] text-[var(--color-muted)] font-medium">
               WHAT I DO
             </p>
           </Reveal>
@@ -73,23 +73,23 @@ export default function Services() {
         {services.map((service, i) => (
           <Reveal key={service.number} delay={i * 0.06}>
             <div
-              className="py-6 md:py-8 border-b border-[#E6E6E3] first:border-t group"
+              className="py-6 md:py-8 border-b border-[var(--color-border)] first:border-t group"
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               data-cursor=""
             >
                 <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6 md:gap-10">
-                  <span className="text-[11px] tracking-[0.15em] text-[#CCCCCC] font-medium transition-colors duration-500 group-hover:text-[#111111] tabular-nums">
+                  <span className="text-[11px] tracking-[0.15em] text-[var(--color-muted)] font-medium transition-colors duration-500 group-hover:text-[var(--color-accent-burgundy)] tabular-nums">
                     {service.number}
                   </span>
                   <motion.span 
-                    className="w-6 h-px bg-[#DDDDDD] hidden md:block origin-left"
+                    className="w-6 h-px bg-[var(--color-border)] hidden md:block origin-left"
                     animate={{ scaleX: hoveredIndex === i ? 1.5 : 1 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   />
                   <motion.h3 
-                    className="font-display font-medium text-[16px] md:text-[20px] lg:text-[24px] tracking-[-0.01em] text-[#555555] transition-colors duration-500 group-hover:text-[#111111]"
+                    className="font-display font-medium text-[16px] md:text-[20px] lg:text-[24px] tracking-[-0.01em] text-[var(--color-muted)] transition-colors duration-500 group-hover:text-[var(--color-text)]"
                     animate={{ x: hoveredIndex === i ? 8 : 0 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   >
@@ -97,7 +97,7 @@ export default function Services() {
                   </motion.h3>
                 </div>
                 <motion.span
-                  className="text-[14px] text-[#CCCCCC] transition-colors duration-500 group-hover:text-[#111111]"
+                  className="text-[14px] text-[var(--color-muted)] transition-colors duration-500 group-hover:text-[var(--color-text)]"
                   animate={{ x: hoveredIndex === i ? 4 : 0 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -122,7 +122,7 @@ export default function Services() {
               exit={{ opacity: 0, scale: 0.9, rotate: -2 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="w-48 h-32 overflow-hidden shadow-xl">
+              <div className="w-48 h-32 overflow-hidden shadow-2xl ring-1 ring-white/10 rounded-sm">
                 <img
                   src={services[hoveredIndex].image}
                   alt=""

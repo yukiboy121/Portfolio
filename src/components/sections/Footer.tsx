@@ -7,20 +7,20 @@ export default function Footer() {
 
   return (
     <footer className="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
-      <div className="h-px bg-[#E6E6E3] mb-12 md:mb-16" />
+      <div className="h-px bg-[var(--color-border)] mb-12 md:mb-16" />
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
         {/* Brand */}
         <div className="md:col-span-4">
           <Reveal>
             <div>
-              <p className="font-display font-semibold text-[14px] tracking-wider text-[#111111]">
+              <p className="font-display font-semibold text-[14px] tracking-wider text-[var(--color-text)]">
                 SN
               </p>
-              <p className="text-[12px] text-[#777777] font-light mt-1">
+              <p className="text-[12px] text-[var(--color-muted)] font-light mt-1">
                 SNEHA NETHSARA
               </p>
-              <p className="text-[11px] text-[#AAAAAA] font-light mt-0.5">
+              <p className="text-[11px] text-[var(--color-muted)] font-light mt-0.5">
                 Developer & Creative Developer
               </p>
             </div>
@@ -35,7 +35,7 @@ export default function Footer() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-[11px] tracking-[0.15em] text-[#777777] hover:text-[#111111] transition-colors duration-300 font-medium"
+                className="block text-[11px] tracking-[0.15em] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 font-medium"
                 data-cursor="OPEN ↗"
               >
                 GITHUB
@@ -44,14 +44,14 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-[11px] tracking-[0.15em] text-[#777777] hover:text-[#111111] transition-colors duration-300 font-medium"
+                className="block text-[11px] tracking-[0.15em] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 font-medium"
                 data-cursor="OPEN ↗"
               >
                 LINKEDIN
               </a>
               <a
                 href="mailto:hello@snehanethsara.com"
-                className="block text-[11px] tracking-[0.15em] text-[#777777] hover:text-[#111111] transition-colors duration-300 font-medium"
+                className="block text-[11px] tracking-[0.15em] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 font-medium"
                 data-cursor=""
               >
                 EMAIL
@@ -66,7 +66,7 @@ export default function Footer() {
             <div className="flex flex-col items-start md:items-end gap-4">
               <button
                 onClick={scrollToTop}
-                className="text-[11px] tracking-[0.15em] text-[#777777] hover:text-[#111111] transition-colors duration-300 font-medium group"
+                className="text-[11px] tracking-[0.15em] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 font-medium group"
                 data-cursor=""
               >
                 <span>BACK TO TOP</span>
@@ -74,7 +74,7 @@ export default function Footer() {
                   ↑
                 </span>
               </button>
-              <p className="text-[10px] text-[#AAAAAA] font-light">
+              <p className="text-[10px] text-[var(--color-muted)] font-light">
                 © 2026
               </p>
             </div>

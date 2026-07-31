@@ -18,7 +18,7 @@ export default function ProjectCaseStudy({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[100] bg-[#F7F7F5] overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-[var(--color-bg)] overflow-y-auto"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{ clipPath: "inset(0 0 0% 0)" }}
           exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -27,7 +27,7 @@ export default function ProjectCaseStudy({
           {/* Close Button */}
           <motion.button
             onClick={onClose}
-            className="fixed top-6 right-6 md:top-8 md:right-12 z-[110] text-[11px] tracking-[0.2em] font-medium text-[#111111] flex items-center gap-2 group"
+            className="fixed top-6 right-6 md:top-8 md:right-12 z-[110] text-[11px] tracking-[0.2em] font-medium text-[var(--color-text)] flex items-center gap-2 group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -46,18 +46,18 @@ export default function ProjectCaseStudy({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
-              <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-4">
+              <p className="text-[10px] tracking-[0.2em] text-[var(--color-accent-burgundy)] font-medium mb-4">
                 {project.number}
               </p>
-              <h1 className="font-display font-bold text-[10vw] md:text-[6vw] lg:text-[4.5vw] leading-[1] tracking-[-0.03em] text-[#111111]">
+              <h1 className="font-display font-bold text-[10vw] md:text-[6vw] lg:text-[4.5vw] leading-[1] tracking-[-0.03em] text-[var(--color-text)]">
                 {project.title}
               </h1>
               <div className="flex items-center gap-4 mt-6">
-                <p className="text-[11px] tracking-[0.15em] text-[#777777] font-medium">
+                <p className="text-[11px] tracking-[0.15em] text-[var(--color-muted)] font-medium">
                   {project.year}
                 </p>
-                <span className="w-6 h-px bg-[#DDDDDD]" />
-                <p className="text-[11px] tracking-[0.15em] text-[#777777] font-medium">
+                <span className="w-6 h-px bg-[var(--color-border)]" />
+                <p className="text-[11px] tracking-[0.15em] text-[var(--color-muted)] font-medium">
                   {project.category}
                 </p>
               </div>
@@ -65,7 +65,7 @@ export default function ProjectCaseStudy({
 
             {/* Hero Image */}
             <motion.div
-              className="mt-12 md:mt-20 overflow-hidden bg-[#EFEFED]"
+              className="mt-12 md:mt-20 overflow-hidden bg-[var(--color-bg-pure)] rounded-sm ring-1 ring-white/10"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -85,10 +85,10 @@ export default function ProjectCaseStudy({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.7 }}
               >
-                <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-6">
+                <p className="text-[10px] tracking-[0.2em] text-[var(--color-muted)] font-medium mb-6">
                   DESCRIPTION
                 </p>
-                <p className="text-[15px] leading-[1.7] text-[#555555] font-light">
+                <p className="text-[15px] leading-[1.7] text-[var(--color-muted)] font-light">
                   {project.description}
                 </p>
               </motion.div>
@@ -101,26 +101,26 @@ export default function ProjectCaseStudy({
               >
                 <div className="space-y-12">
                   <div>
-                    <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-4">
+                    <p className="text-[10px] tracking-[0.2em] text-[var(--color-muted)] font-medium mb-4">
                       THE IDEA
                     </p>
-                    <p className="text-[15px] leading-[1.7] text-[#555555] font-light">
+                    <p className="text-[15px] leading-[1.7] text-[var(--color-muted)] font-light">
                       {project.idea}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-4">
+                    <p className="text-[10px] tracking-[0.2em] text-[var(--color-muted)] font-medium mb-4">
                       THE BUILD
                     </p>
-                    <p className="text-[15px] leading-[1.7] text-[#555555] font-light">
+                    <p className="text-[15px] leading-[1.7] text-[var(--color-muted)] font-light">
                       {project.build}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-4">
+                    <p className="text-[10px] tracking-[0.2em] text-[var(--color-muted)] font-medium mb-4">
                       THE DETAILS
                     </p>
-                    <p className="text-[15px] leading-[1.7] text-[#555555] font-light">
+                    <p className="text-[15px] leading-[1.7] text-[var(--color-muted)] font-light">
                       {project.details}
                     </p>
                   </div>
@@ -135,15 +135,15 @@ export default function ProjectCaseStudy({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.7 }}
             >
-              <div className="h-px bg-[#E6E6E3] mb-10" />
-              <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-6">
+              <div className="h-px bg-[var(--color-border)] mb-10" />
+              <p className="text-[10px] tracking-[0.2em] text-[var(--color-muted)] font-medium mb-6">
                 TECHNOLOGY
               </p>
               <div className="flex flex-wrap gap-4">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="text-[12px] tracking-[0.08em] text-[#555555] font-medium px-4 py-2 border border-[#E6E6E3]"
+                    className="text-[12px] tracking-[0.08em] text-[var(--color-muted)] font-medium px-4 py-2 border border-[var(--color-border)] hover:bg-white/[0.02] transition-colors duration-300"
                   >
                     {tech}
                   </span>
@@ -163,11 +163,11 @@ export default function ProjectCaseStudy({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[#111111] group"
+                  className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[var(--color-text)] group"
                   data-cursor="OPEN ↗"
                 >
                   <span>LIVE WEBSITE</span>
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[var(--color-accent-burgundy)]">
                     ↗
                   </span>
                 </a>
@@ -177,11 +177,11 @@ export default function ProjectCaseStudy({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[#111111] group"
+                  className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[var(--color-text)] group"
                   data-cursor="OPEN ↗"
                 >
                   <span>GITHUB</span>
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[var(--color-accent-burgundy)]">
                     ↗
                   </span>
                 </a>
@@ -195,13 +195,13 @@ export default function ProjectCaseStudy({
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9, duration: 0.7 }}
             >
-              <div className="h-px bg-[#E6E6E3] mb-10" />
+              <div className="h-px bg-[var(--color-border)] mb-10" />
               <button
                 onClick={onClose}
-                className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[#777777] group"
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-300 group"
                 data-cursor=""
               >
-                <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1">
+                <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1 text-[var(--color-accent-burgundy)]">
                   ←
                 </span>
                 <span>BACK TO ALL PROJECTS</span>

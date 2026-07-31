@@ -29,7 +29,7 @@ function ProjectCard({
   const isEven = index % 2 === 0;
 
   return (
-    <div ref={cardRef} className={`mb-24 md:mb-40 ${isEven ? "" : "md:ml-auto"}`}>
+    <div ref={cardRef} className={`mb-16 md:mb-24 ${isEven ? "" : "md:ml-auto"}`}>
       <div
         className={`grid grid-cols-1 gap-6 md:gap-10 md:grid-cols-12`}
       >
@@ -43,22 +43,22 @@ function ProjectCard({
         >
           <Reveal delay={0.1}>
             <div>
-              <p className="text-[40px] md:text-[56px] font-display font-extralight text-[#E6E6E3] leading-none tracking-[-0.04em]">
+              <p className="text-[40px] md:text-[56px] font-display font-extralight text-[var(--color-border)] leading-none tracking-[-0.04em]">
                 {project.number}
               </p>
-              <h3 className="font-display font-semibold text-[16px] md:text-[20px] tracking-[-0.02em] text-[#111111] mt-4 leading-tight">
+              <h3 className="font-display font-semibold text-[16px] md:text-[20px] tracking-[-0.02em] text-[var(--color-text)] mt-4 leading-tight">
                 {project.title}
               </h3>
               <div className="flex items-center gap-3 mt-3">
-                <p className="text-[10px] tracking-[0.15em] text-[#AAAAAA] font-medium">
+                <p className="text-[10px] tracking-[0.15em] text-[var(--color-muted)] font-medium">
                   {project.year}
                 </p>
-                <span className="w-4 h-px bg-[#DDDDDD]" />
-                <p className="text-[10px] tracking-[0.15em] text-[#AAAAAA] font-medium">
+                <span className="w-4 h-px bg-[var(--color-border)]" />
+                <p className="text-[10px] tracking-[0.15em] text-[var(--color-muted)] font-medium">
                   {project.category}
                 </p>
               </div>
-              <p className="text-[12px] leading-[1.7] text-[#999999] font-light mt-4 max-w-[240px] hidden md:block">
+              <p className="text-[12px] leading-[1.7] text-[var(--color-muted)] font-light mt-4 max-w-[240px] hidden md:block opacity-80">
                 {project.description.slice(0, 120)}...
               </p>
             </div>
@@ -67,11 +67,11 @@ function ProjectCard({
           <Reveal delay={0.3}>
             <button
               onClick={() => onProjectClick(project)}
-              className="mt-6 md:mt-0 inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[#111111] group"
+              className="mt-6 md:mt-0 inline-flex items-center gap-2 text-[11px] tracking-[0.15em] font-medium text-[var(--color-text)] group"
               data-cursor="VIEW →"
             >
               <span>VIEW PROJECT</span>
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 text-[var(--color-accent-burgundy)]">
                 →
               </span>
             </button>
@@ -89,18 +89,18 @@ function ProjectCard({
           <Reveal delay={0.15}>
             <button
               onClick={() => onProjectClick(project)}
-              className="project-image-container relative overflow-hidden w-full aspect-[16/10] bg-[#EFEFED] block group"
+              className="project-image-container relative overflow-hidden w-full aspect-[16/10] bg-[var(--color-bg-pure)] block group rounded-sm ring-1 ring-white/5 group-hover:ring-white/20 transition-all duration-700 shadow-2xl"
               data-cursor="VIEW →"
             >
               <motion.img
                 src={project.image}
                 alt={project.title}
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700"
+                className="w-full h-full object-cover transition-transform duration-700 opacity-90 group-hover:opacity-100"
                 style={{ y: imageY, scale: imageScale }}
               />
               {/* Subtle overlay on hover */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.03] transition-colors duration-700" />
+              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.02] transition-colors duration-700 pointer-events-none" />
             </button>
           </Reveal>
         </div>
@@ -111,20 +111,20 @@ function ProjectCard({
 
 export default function SelectedWork({ onProjectClick }: SelectedWorkProps) {
   return (
-    <section id="work" className="py-32 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto">
-      <LineReveal className="mb-16 md:mb-24" />
+    <section id="work" className="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+      <LineReveal className="mb-12 md:mb-16" />
 
-      <div className="grid grid-cols-1 md:grid-cols-12 mb-20 md:mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24">
         <div className="md:col-span-4">
           <Reveal>
-            <p className="text-[11px] tracking-[0.2em] text-[#777777] font-medium">
+            <p className="text-[11px] tracking-[0.2em] text-[var(--color-muted)] font-medium">
               SELECTED WORK
             </p>
           </Reveal>
         </div>
         <div className="md:col-span-6 md:col-start-5 mt-6 md:mt-0">
           <Reveal delay={0.15}>
-            <p className="text-[14px] md:text-[16px] leading-[1.8] text-[#777777] font-light max-w-md">
+            <p className="text-[14px] md:text-[16px] leading-[1.8] text-[var(--color-muted)] font-light max-w-md">
               A curated selection of projects that represent my approach 
               to building digital products — thoughtful, functional, and refined.
             </p>

@@ -16,13 +16,13 @@ export default function Skills() {
   };
 
   return (
-    <section className="py-32 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto">
-      <LineReveal className="mb-16 md:mb-24" />
+    <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+      <LineReveal className="mb-12 md:mb-16" />
 
-      <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-12 mb-12 md:mb-16">
         <div className="md:col-span-3">
           <Reveal>
-            <p className="text-[11px] tracking-[0.2em] text-[#777777] font-medium">
+            <p className="text-[11px] tracking-[0.2em] text-[var(--color-muted)] font-medium">
               TECHNOLOGY
             </p>
           </Reveal>
@@ -33,20 +33,20 @@ export default function Skills() {
         {skillCategories.map((category, catIdx) => (
           <Reveal key={category.title} delay={catIdx * 0.1}>
             <div>
-              <p className="text-[10px] tracking-[0.2em] text-[#AAAAAA] font-medium mb-6">
+              <p className="text-[10px] tracking-[0.2em] text-[var(--color-accent-burgundy)] font-medium mb-6">
                 {category.title}
               </p>
               <div className="space-y-0">
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="py-2.5 border-b border-[#F0F0EE] last:border-0"
+                    className="py-2.5 border-b border-[var(--color-border)] last:border-0"
                     onMouseEnter={() => setHoveredSkill(skill)}
                     onMouseLeave={() => setHoveredSkill(null)}
                     onMouseMove={handleMouseMove}
                   >
                     <p
-                      className="text-[13px] text-[#333333] font-light transition-colors duration-200 hover:text-[#111111]"
+                      className="text-[13px] text-[var(--color-muted)] font-light transition-colors duration-200 hover:text-[var(--color-text)]"
                       data-cursor=""
                     >
                       {skill.name}
@@ -73,7 +73,7 @@ export default function Skills() {
             exit={{ opacity: 0, y: 5, scale: 0.95 }}
             transition={{ duration: 0.15 }}
           >
-            <div className="bg-[#111111] text-[#F7F7F5] px-3 py-1.5 text-[10px] tracking-[0.05em] font-medium whitespace-nowrap">
+            <div className="bg-[var(--color-text)] text-[var(--color-bg)] px-3 py-1.5 text-[10px] tracking-[0.05em] font-medium whitespace-nowrap">
               {hoveredSkill.description}
             </div>
           </motion.div>
