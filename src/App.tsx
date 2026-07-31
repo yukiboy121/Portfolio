@@ -3,14 +3,11 @@ import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/components/PageLoader";
 import Navigation from "@/components/sections/Navigation";
 import Hero from "@/components/sections/Hero";
-import Introduction from "@/components/sections/Introduction";
 import About from "@/components/sections/About";
-import Quote from "@/components/sections/Quote";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Services from "@/components/sections/Services";
-import Philosophy from "@/components/sections/Philosophy";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 import ProjectCaseStudy from "@/components/sections/ProjectCaseStudy";
@@ -43,7 +40,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#F7F7F5] min-h-screen">
+    <div className="bg-transparent min-h-screen text-[var(--color-text)]">
       <CustomCursor />
       <PageLoader isLoading={isLoading} />
 
@@ -51,14 +48,11 @@ export default function App() {
 
       <main>
         <Hero />
-        <Introduction />
         <About />
-        <Quote />
         <SelectedWork onProjectClick={handleProjectClick} />
         <Services />
         <Skills />
         <Experience />
-        <Philosophy />
         <Contact />
       </main>
 
